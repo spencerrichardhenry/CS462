@@ -20,5 +20,13 @@ A first ruleset for the Quickstart
     select when echo hello
     send_directive("say", {"something": "Hello World"})
   }
-   
+
+  rule hello_monkey {
+    select when echo monkey 
+    //.defaulsTo method
+    //send_directive("Hello " + event:attr("name").defaultsTo("Monkey"))
+
+    //Ternary operator
+    send_directive("Hello " + (event:attr("name") => event:attr("name") | "Monkey"))
+  }
 }

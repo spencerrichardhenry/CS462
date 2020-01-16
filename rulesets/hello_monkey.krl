@@ -23,10 +23,15 @@ A first ruleset for the Quickstart
 
   rule hello_monkey {
     select when echo monkey 
-    //.defaulsTo method
-    //send_directive("Hello " + event:attr("name").defaultsTo("Monkey"))
+    pre {
+      name = event:attr("name").klog("test")
+    }
+    //.defaultsTo 
+    send_directive("Hello " + name.defaultsTo("Monkey"))
 
     //Ternary operator
-    send_directive("Hello " + (event:attr("name") => event:attr("name") | "Monkey"))
+    //send_directive("Hello " + name => name | "Monkey"))
+    always {
+    }
   }
 }

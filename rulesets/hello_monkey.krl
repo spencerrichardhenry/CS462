@@ -1,4 +1,4 @@
-ruleset hello_world {
+ruleset hello_monkey {
   meta {
     name "Hello World"
     description <<

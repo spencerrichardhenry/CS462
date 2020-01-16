@@ -31,7 +31,5 @@ A first ruleset for the Quickstart
 
     //Ternary operator
     //send_directive("Hello " + name => name | "Monkey"))
-    always {
-    }
   }
 }

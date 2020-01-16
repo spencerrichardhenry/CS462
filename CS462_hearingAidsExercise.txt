@@ -1,0 +1,17 @@
+What features and properties justify considering these hearing aids a distributed system? 
+Importantly, we know that the hearing aids consist of (at least) 2 separate processes. It could be more depending
+on how the hardware inside a hearing aid is organized, and if you include the phone, but at least 2.
+Also crucially, both hearing aids are cooperating in order to complete a shared task (improve hearing). Those
+are what justify hearings aids as a distributed system.
+
+Are they a decentralized or centralized system? Justify your answer. 
+I would answer that hearings aids are a decentralized system. I say this because the left aid, right aid, and
+the phone share similar/identical authority as to what happens with the programming of the aids (audio settings,
+volume, etc).
+
+What role might latency play in their design? 
+Latency is important in a few different aspects of hearing aid design. Firstly, you want the 
+amplification/audio processing portion of a hearing aid system to function very quickly so that the user
+doesn't experience any sort of echo/reverb with the natural sound hitting their eardrums before the computed
+sound. Additionally, there is a latency to take into account with sound waves travelling from one side of the head
+to the other.

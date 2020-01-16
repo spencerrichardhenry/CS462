@@ -27,9 +27,10 @@ A first ruleset for the Quickstart
       name = event:attr("name").klog("test")
     }
     //.defaultsTo 
-    send_directive("Hello " + name.defaultsTo("Monkey"))
+    //send_directive("Hello " + name.defaultsTo("Monkey"))
 
     //Ternary operator
-    //send_directive("Hello " + name => name | "Monkey"))
+    send_directive("Hello " + (name => name | "Monkey"))
+    //send_directive("Hello " + (event:attr("name") => event:attr("name") | "Monkey"))
   }
 }

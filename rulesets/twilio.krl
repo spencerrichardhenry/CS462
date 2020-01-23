@@ -11,6 +11,12 @@ Twilio Key Module
          auth_token =  keys:auth{"auth_token"}
   }
   global {
+    __testing = { "queries":
+  [ 
+    { "name": "__testing" },
+    { "name": "messageList"}
+  ],
+  "events": []}
     messageList = function(to, from, paginated) {
       TwilioApi:messages(event:attr("to"),
       event:attr("from"),
@@ -23,14 +29,6 @@ Twilio Key Module
     TwilioApi:send_sms(event:attr("to"),
              event:attr("from"),
              event:attr("message"))
-  }
-
-
-  rule test_get_messages {
-    select when get messages
-    messageList(event:attr("to"),
-    event:attr("from"),
-    event:attr("paginated"))
   }
 
 }

@@ -16,7 +16,7 @@ ruleset twilioApiModule {
     }
     messages = function(to, from, paginated) {
       items = http.get(base_url + "Messages.json");
-      send_directive("say", {"items": items});
+      send_directive("say", [{"items": items}, {"hello": "hellothere"} ]);
     }
   }
 }

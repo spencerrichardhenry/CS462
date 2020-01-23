@@ -6,14 +6,14 @@ Twilio Key Module
 >>
     author "Spencer Henry"
     use module twilio_auth
-    use module io.picolabs.twilio_v2 alias twilio
-    with account_sid = keys:twilio{"account_sid"}
-         auth_token =  keys:twilio{"auth_token"}
+    use module twilioApiModule alias TwilioApi
+    with account_sid = keys:auth{"account_sid"}
+         auth_token =  keys:auth{"auth_token"}
   }
    
   rule test_send_sms {
     select when test new_message
-    twilio:send_sms(event:attr("to"),
+    TwilioApi:send_sms(event:attr("to"),
              event:attr("from"),
              event:attr("message"),
              event:attr("account_sid"),

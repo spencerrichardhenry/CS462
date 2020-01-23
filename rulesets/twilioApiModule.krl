@@ -1,4 +1,4 @@
-ruleset io.picolabs.twilio_v2 {
+ruleset twilioApiModule {
   meta {
     configure using account_sid = ""
                     auth_token = ""

@@ -15,9 +15,7 @@ Twilio Key Module
     select when test new_message
     TwilioApi:send_sms(event:attr("to"),
              event:attr("from"),
-             event:attr("message"),
-             event:attr("account_sid"),
-             event:attr("auth_token"))
+             event:attr("message"))
   }
 
 }

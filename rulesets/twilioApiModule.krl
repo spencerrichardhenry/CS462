@@ -2,8 +2,7 @@ ruleset twilioApiModule {
   meta {
     configure using account_sid = ""
                     auth_token = ""
-    provides
-        send_sms
+    provides send_sms
   }
  
   global {

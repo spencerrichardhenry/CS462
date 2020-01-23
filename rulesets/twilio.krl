@@ -10,9 +10,6 @@ Twilio Key Module
     with account_sid = keys:twilio{"account_sid"}
          auth_token =  keys:twilio{"auth_token"}
   }
-  }
-   
-  }
    
   rule test_send_sms {
     select when test new_message

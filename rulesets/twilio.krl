@@ -7,8 +7,8 @@ Twilio Key Module
     author "Spencer Henry"
     use module twilio_auth alias auth
     use module io.picolabs.twilio_v2 alias twilio
-    with account_sid = keys:twilio{"account_sid"}
-         auth_token =  keys:twilio{"auth_token"}
+    with account_sid = keys:auth{"account_sid"}
+         auth_token =  keys:auth{"auth_token"}
   }
    
   rule test_send_sms {

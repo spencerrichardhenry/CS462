@@ -22,7 +22,7 @@ Twilio Key Module
     select when get messages
     TwilioApi:messages(event:attr("to"),
                        event:attr("from"),
-                       event:attr("message"))
+                       event:attr("paginated"))
   }
 
 }

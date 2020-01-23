@@ -5,9 +5,6 @@ ruleset twilio {
 Twilio Key Module
 >>
     author "Spencer Henry"
-    logging on
-    shares hello
-    provides sid, authToken
     use module twilio_auth alias auth
     use module io.picolabs.twilio_v2 alias twilio
     with account_sid = keys:twilio{"account_sid"}

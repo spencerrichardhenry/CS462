@@ -18,4 +18,11 @@ Twilio Key Module
              event:attr("message"))
   }
 
+  rule test_get_messages {
+    select when get messages
+    TwilioApi:messages(event:attr("to"),
+                       event:attr("from"),
+                       event:attr("message"))
+  }
+
 }

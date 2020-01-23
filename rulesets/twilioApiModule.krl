@@ -2,7 +2,7 @@ ruleset twilioApiModule {
   meta {
     configure using account_sid = ""
                     auth_token = ""
-    provides send_sms
+    provides send_sms, messages
   }
  
   global {
@@ -13,6 +13,10 @@ ruleset twilioApiModule {
                 "To":to,
                 "Body":message
             })
+    }
+    messages = function() {
+      items = http.get(base_url + "Messages.json");
+      send_directive("say", {"items": items});
     }
   }
 }

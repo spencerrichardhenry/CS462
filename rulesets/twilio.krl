@@ -26,9 +26,12 @@ Twilio Key Module
    
   rule test_send_sms {
     select when test new_message
-    TwilioApi:send_sms(event:attr("to"),
-             event:attr("from"),
-             event:attr("message"))
+    pre {
+      data =     TwilioApi:send_sms(event:attr("to"),
+      event:attr("from"),
+      event:attr("message"))
+    }
+    send_directive("Hello" + data);
   }
 
 }

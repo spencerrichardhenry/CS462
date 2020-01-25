@@ -21,7 +21,7 @@ ruleset twilio {
     pre {
       data = TwilioApi:messages(event:attr("to"),
       event:attr("from"),
-      event:attr("paginated"))
+      event:attr("paginated")).klog()
     }
     send_directive("Hello" + data);
   }

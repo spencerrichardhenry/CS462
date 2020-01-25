@@ -15,7 +15,8 @@ ruleset twilioApiModule {
             })
     }
     messages = function(to, from, paginated) {
-      items = http.get(base_url + "Messages.json").decode(){"content"}
+      items = http.get(base_url + "Messages.json").klog()
+      response = items{"response"}.klog()
       return items
     }
   }

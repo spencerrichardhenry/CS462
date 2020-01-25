@@ -10,10 +10,9 @@ ruleset twilio {
    
   rule test_send_sms {
     select when test new_message
-    TwilioApi:send_sms(event:attr("from"),
-             event:attr("to"),
+    TwilioApi:send_sms(event:attr("to"),
+             event:attr("from"),
              event:attr("message"))
-             
     //send_directive("send_sms completed")
   }
 

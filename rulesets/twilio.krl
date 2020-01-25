@@ -10,26 +10,20 @@ Twilio Key Module
     with account_sid = keys:auth{"account_sid"}
          auth_token =  keys:auth{"auth_token"}
   }
-  global {
-    __testing = { "queries":
-  [ 
-    { "name": "__testing" },
-    { "name": "messageList"}
-  ],
-  "events": []}
-    messageList = function(to, from, paginated) {
-      TwilioApi:messages(event:attr("to"),
-      event:attr("from"),
-      event:attr("paginated"))
-    }
-  }
    
   rule test_send_sms {
     select when test new_message
+    TwilioApi:send_sms(event:attr("to"),
+             event:attr("from"),
+             event:attr("message"))
+  }
+
+  rule get_messages {
+    select when get messageList
     pre {
-      data =     TwilioApi:send_sms(event:attr("to"),
+      data =       TwilioApi:messages(event:attr("to"),
       event:attr("from"),
-      event:attr("message"))
+      event:attr("paginated"))
     }
     send_directive("Hello" + data);
   }

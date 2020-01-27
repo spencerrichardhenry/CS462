@@ -13,7 +13,6 @@ ruleset twilio {
     TwilioApi:send_sms(event:attr("to"),
              event:attr("from"),
              event:attr("message"))
-    //send_directive("send_sms completed")
   }
 
   rule get_messages {

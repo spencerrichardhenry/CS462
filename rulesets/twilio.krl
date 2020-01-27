@@ -17,11 +17,6 @@ Twilio Key Module
     { "name": "messageList"}
   ],
   "events": []}
-    messageList = function(to, from, paginated) {
-      TwilioApi:messages(event:attr("to"),
-      event:attr("from"),
-      event:attr("paginated"))
-    }
   }
    
   rule test_send_sms {
@@ -31,4 +26,13 @@ Twilio Key Module
              event:attr("message"))
   }
 
+  rule get_messages {
+    select when get messageList
+    pre {
+      data = TwilioApi:messages(event:attr("to"),
+      event:attr("from"),
+      event:attr("paginated"))
+    }
+    send_directive("hello " + data);
+  }
 }

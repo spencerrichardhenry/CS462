@@ -1,22 +1,11 @@
 ruleset twilio {
   meta {
     name "Twilio"
-    description <<
-Twilio Key Module
->>
     author "Spencer Henry"
     use module twilio_auth
     use module twilioApiModule alias TwilioApi
     with account_sid = keys:auth{"account_sid"}
          auth_token =  keys:auth{"auth_token"}
-  }
-  global {
-    __testing = { "queries":
-  [ 
-    { "name": "__testing" },
-    { "name": "messageList"}
-  ],
-  "events": []}
   }
    
   rule test_send_sms {
@@ -24,6 +13,7 @@ Twilio Key Module
     TwilioApi:send_sms(event:attr("to"),
              event:attr("from"),
              event:attr("message"))
+    //send_directive("send_sms completed")
   }
 
   rule get_messages {
@@ -31,8 +21,9 @@ Twilio Key Module
     pre {
       data = TwilioApi:messages(event:attr("to"),
       event:attr("from"),
-      event:attr("paginated"))
+      event:attr("paginated")).klog()
     }
-    send_directive("hello " + data);
+    send_directive("Hello" + data);
   }
+
 }

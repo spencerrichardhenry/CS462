@@ -22,7 +22,7 @@ ruleset twilio {
       event:attr("from"),
       event:attr("paginated")).klog()
     }
-    send_directive("Hello" + data{"first_page_uri"});
+    send_directive(data{"messages"}[0]{"body"});
   }
 
 }

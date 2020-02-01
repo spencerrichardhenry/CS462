@@ -10,6 +10,6 @@ ruleset post_test {
 
   rule process_heartbeat {
     select when wovyn heartbeat where event:attr("genericThing")
-    send_directive(event:attr("genericThing"){"data"}{"temperature"}[0]{"temperatureF"})
+    send_directive("temp: " + event:attr("genericThing"){"data"}{"temperature"}[0]{"temperatureF"})
   }
 }

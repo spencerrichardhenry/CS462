@@ -10,6 +10,6 @@ ruleset post_test {
 
   rule process_heartbeat {
     select when wovyn heartbeat
-    send_directive("Hello there. This is a heartbeat event." + (event:attr("genericThing") => event:attr("genericThing"){"data"}{"temperature"}{"temperatureF"} | "no generic thing"))
+    send_directive("Hello there. This is a heartbeat event." + (event:attr("genericThing") => event:attr("genericThing"){"data"}{"temperature"}[0]{"temperatureF"} | "no generic thing"))
   }
 }

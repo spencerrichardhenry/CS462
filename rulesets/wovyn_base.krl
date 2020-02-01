@@ -25,10 +25,14 @@ ruleset post_test {
 
   rule find_high_temps {
     select when wovyn new_temperature_reading
-    send_directive("Hello, this is find_high_temps ruleset");
+    send_directive(event:attr("temperature") > temperature_threshold => "There was a temperature violation." | "No temperature violation.")
+    fired {
+      raise wovyn event (event:attr("temperature") > temperature_threshold) => "threshold_violation" | ""
+    }
   }
 
   rule threshold_notification {
     select when wovyn threshold_violation
+    send_directive("this is the threshold_notification rule.")
   }
 }

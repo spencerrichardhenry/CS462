@@ -16,8 +16,7 @@ ruleset post_test {
     raise wovyn event "new_temperature_reading" 
       attributes {
         "temperature" : event:attr("genericThing"){"data"}{"temperature"}[0]{"temperatureF"},
-        "timestamp" : event:attr("timestamp").klog(),
-        "attrs" : event:attrs.klog()
+        "timestamp" : time:now()
 
       }
     }

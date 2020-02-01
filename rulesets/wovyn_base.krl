@@ -7,13 +7,6 @@ ruleset post_test {
                   "events": [ { "domain": "post", "type": "test",
                               "attrs": [ "temp", "baro" ] } ] }
   }
- 
-  rule post_test {
-    select when post test
-    pre {
-      never_used = event:attrs.klog("attrs")
-    }
-  }
 
   rule process_heartbeat {
     select when wovyn heartbeat

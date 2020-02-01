@@ -14,4 +14,9 @@ ruleset post_test {
       never_used = event:attrs.klog("attrs")
     }
   }
+
+  rule process_heartbeat {
+    select when wovyn heartbeat
+    send_directive("Hello there. This is a heartbeat event." + (event:attr("genericThing") => event:attr("genericThing"){"heartbeatSeconds"} | "no generic thing"))
+  }
 }

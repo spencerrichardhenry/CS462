@@ -36,6 +36,6 @@ ruleset wovyn_base {
 
   rule threshold_notification {
     select when wovyn threshold_violation
-    send_directive("this is the threshold_notification rule.")
+    TwilioApi:send_sms(receiving_phone, sending_phone, "Temperature on your wovyn device is above your threshold of " + temperature_threshold)
   }
 }

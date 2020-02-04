@@ -1,13 +1,18 @@
-ruleset post_test {
+ruleset wovyn_base {
   meta {
     shares __testing
+    use module twilio_auth
+    use module twilioApiModule alias TwilioApi
+    with account_sid = keys:auth{"account_sid"}
+         auth_token =  keys:auth{"auth_token"}
   }
   global {
     __testing = { "queries": [ { "name": "__testing" } ],
                   "events": [ { "domain": "post", "type": "test",
                               "attrs": [ "temp", "baro" ] } ] }
     temperature_threshold = 73
-                              
+    receiving_phone = 3606433965
+    sending_phone = 3177080143
   }
 
   rule process_heartbeat {
@@ -17,10 +22,8 @@ ruleset post_test {
       attributes {
         "temperature" : event:attr("genericThing"){"data"}{"temperature"}[0]{"temperatureF"},
         "timestamp" : time:now({"tz" : "America/Denver"})
-
       }
     }
-    // send_directive("temp: " + event:attr("genericThing"){"data"}{"temperature"}[0]{"temperatureF"})
   }
 
   rule find_high_temps {

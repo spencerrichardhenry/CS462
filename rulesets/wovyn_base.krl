@@ -5,6 +5,7 @@ ruleset wovyn_base {
     use module twilioApiModule alias TwilioApi
     with account_sid = keys:auth{"account_sid"}
          auth_token =  keys:auth{"auth_token"}
+    provides temperature_threshold
   }
   global {
     __testing = { "queries": [ { "name": "__testing" } ],
@@ -30,7 +31,7 @@ ruleset wovyn_base {
     select when wovyn new_temperature_reading
     send_directive(event:attr("temperature") > temperature_threshold => "There was a temperature violation." | "No temperature violation.")
     fired {
-      raise wovyn event (event:attr("temperature") > temperature_threshold) => "threshold_violation" | ""
+      raise wovyn event (event:attr("temperature") > temperature_threshold) => "threshold_violation" | "" attributes {}
     }
   }
 

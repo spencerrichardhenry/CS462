@@ -24,5 +24,4 @@ ruleset twilio {
     }
     send_directive(data{"messages"}[0]{"body"});
   }
-
 }

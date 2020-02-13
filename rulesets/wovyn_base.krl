@@ -31,7 +31,11 @@ ruleset wovyn_base {
     select when wovyn new_temperature_reading
     send_directive(event:attr("temperature") > temperature_threshold => "There was a temperature violation." | "No temperature violation.")
     fired {
-      raise wovyn event "threshold_violation" if (event:attr("temperature") > temperature_threshold)
+      raise wovyn event "threshold_violation"
+        attributes {
+          "temperature" : event:attr("temperature"),
+          "timestamp" : event:attr("timestamp")
+        } if (event:attr("temperature") > temperature_threshold)
     }
   }
 

@@ -23,7 +23,7 @@ ruleset temperature_store {
     select when wovyn new_temperature_reading
     always {
       ent:temperatures := ent:temperatures.append({
-        "temp" : event:attr("temperature").klog(),
+        "temp" : event:attr("temperature"),
         "timestamp" : time:now({"tz" : "America/Denver"})
       })
     }
@@ -33,7 +33,7 @@ ruleset temperature_store {
     select when wovyn threshold_violation
     always {
       ent:threshold_violations := threshold_violations.append({
-        "temp" : event:attr("temperature"),
+        "temp" : event:attr("temperature").klog(),
         "timestamp" : event:attr("timestamp")
       })
     }

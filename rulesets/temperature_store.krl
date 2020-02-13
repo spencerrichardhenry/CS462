@@ -32,9 +32,9 @@ ruleset temperature_store {
   rule collect_threshold_violations {
     select when wovyn threshold_violation
     always {
-      ent:threshold_violations := threshold_violations.append({
+      ent:threshold_violations := ent:threshold_violations.append({
         "temp" : event:attr("temperature").klog(),
-        "timestamp" : event:attr("timestamp")
+        "timestamp" : event:attr("timestamp").klog()
       })
     }
   }

@@ -1,7 +1,7 @@
 ruleset temperature_store {
   meta {
     shares __testing
-    use module wovyn_base
+    use module sensor_profile alias sensor
     provides temperatures, threshold_violations, inrange_temperatures
     shares temperatures, threshold_violations, inrange_temperatures
   }
@@ -14,7 +14,7 @@ ruleset temperature_store {
     }
     inrange_temperatures = function() {
       return ent:temperatures.filter(function(x) {
-        x{"temp"} < wovyn_base:temperature_threshold
+        x{"temp"} < sensor:temperature_threshold
       })
     }
   }

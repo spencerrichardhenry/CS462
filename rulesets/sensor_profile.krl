@@ -1,4 +1,4 @@
-ruleset temperature_store {
+ruleset sensor_profile {
   meta {
     shares __testing
     provides sensor_location, sensor_name, temperature_threshold, receiving_phone, sending_phone 

@@ -36,8 +36,8 @@ ruleset sensor_profile {
   rule updatePhones {
     select when sensor phones_updated
     always {
-      ent:receiving_phone := event:attr("receiving")
-      ent:sending_phone := event:attr("sending")
+      ent:receiving_phone := event:attr("receiving").as("Number")
+      ent:sending_phone := event:attr("sending").as("Number")
     } 
   }
 

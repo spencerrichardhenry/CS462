@@ -26,13 +26,16 @@ ruleset wovyn_base {
 
   rule find_high_temps {
     select when wovyn new_temperature_reading
+    pre {
+      threshold = sensor:temperature_threshold
+    }
     send_directive(event:attr("temperature") > sensor:temperature_threshold => "There was a temperature violation." | "No temperature violation.")
     fired {
       raise wovyn event "threshold_violation"
         attributes {
           "temperature" : event:attr("temperature"),
           "timestamp" : event:attr("timestamp")
-        } if (event:attr("temperature") > sensor:temperature_threshold)
+        } if (event:attr("temperature") > threshold)
     }
   }
 

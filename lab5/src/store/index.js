@@ -13,11 +13,6 @@ export default new Vuex.Store({
   },
   mutations: {
     setTemps(state, temps) {
-      if (temps[37] > state.tempThreshold) console.log("temps37 > threshold");
-      console.log(temps[37].temp);
-      console.log(state.tempThreshold)
-      console.log(temps[37].temp > state.tempThreshold);
-
       state.temps = temps;
     },
     setViolations(state, violations) {

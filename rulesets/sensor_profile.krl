@@ -44,7 +44,7 @@ ruleset sensor_profile {
   rule updateThreshold {
      select when sensor threshold_updated
      always {
-       ent:temperature_threshold := event:attr("threshold")
+       ent:temperature_threshold := event:attr("threshold").as("Number")
      }
   }
 

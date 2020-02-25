@@ -8,21 +8,11 @@ ruleset sensor_profile {
     getProfile = function() {
       return {"location": sensor_location, "name": sensor_name, "threshold": temperature_threshold, "receiving_phone": receiving_phone, "sending_phone": sending_phone }
     }
-    sensor_location = function() {
-      return ent:sensor_location.defaultsTo("provo")
-    }
-    sensor_name = function() {
-      return ent:sensor_name.defaultsTo("wovyn")
-    }
-    temperature_threshold = function() {
-      return ent:temperature_threshold.defaultsTo(73)
-    }
-    receiving_phone = function() {
-      return ent:receiving_phone.defaultsTo(3606433965)
-    }
-    sending_phone = function() {
-      return ent:sending_phone.defaultsTo(3177080143)
-    }
+    sensor_location = ent:sensor_location.defaultsTo("provo")
+    sensor_name = ent:sensor_name.defaultsTo("wovyn")
+    temperature_threshold = ent:temperature_threshold.defaultsTo(73)
+    receiving_phone = ent:receiving_phone.defaultsTo(3606433965)
+    sending_phone = ent:sending_phone.defaultsTo(3177080143)
   }
 
   rule updateProfile {

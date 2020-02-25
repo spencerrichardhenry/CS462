@@ -32,7 +32,7 @@ ruleset wovyn_base {
         attributes {
           "temperature" : event:attr("temperature"),
           "timestamp" : event:attr("timestamp")
-        } if (event:attr("temperature").klog().as("Number") > sensor:temperature_threshold)
+        } if (event:attr("temperature") > sensor:temperature_threshold)
     }
   }
 

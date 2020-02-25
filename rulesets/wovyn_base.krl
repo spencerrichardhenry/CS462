@@ -6,7 +6,6 @@ ruleset wovyn_base {
     with account_sid = keys:auth{"account_sid"}
          auth_token =  keys:auth{"auth_token"}
     use module sensor_profile alias sensor
-    provides temperature_threshold
   }
   global {
     __testing = { "queries": [ { "name": "__testing" } ],
@@ -33,7 +32,7 @@ ruleset wovyn_base {
         attributes {
           "temperature" : event:attr("temperature"),
           "timestamp" : event:attr("timestamp")
-        } if (event:attr("temperature") > sensor:temperature_threshold)
+        } if (event:attr("temperature").klog().as("Number") > sensor:temperature_threshold)
     }
   }
 

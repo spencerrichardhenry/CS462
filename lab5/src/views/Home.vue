@@ -9,7 +9,7 @@
         <b>{{temps[temps.length - 1].temp}}</b>
       </span>
       <span v-else>
-        <b>Current temperature: {{temps[temps.length - 1].temp}}</b>
+        <b>{{temps[temps.length - 1].temp}}</b>
       </span>
       <br />
 

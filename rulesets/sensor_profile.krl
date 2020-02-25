@@ -32,13 +32,11 @@ ruleset sensor_profile {
   }
 
   rule updateThreshold {
-    // select when sensor threshold_updated
-    // // pre {
-    // //   temperature_threshold = event:attr("threshold")
-    // // }
-    // send_directive("hellooo")
-    select when sensor threshold_updated
-    send_directive("hello" + temperature_threshold)
+     select when sensor threshold_updated
+     pre {
+       temperature_threshold = event:attr("threshold")
+     }
+     send_directive("hellooo")
   }
 
 }

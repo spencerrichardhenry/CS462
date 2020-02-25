@@ -26,21 +26,18 @@ ruleset wovyn_base {
 
   rule find_high_temps {
     select when wovyn new_temperature_reading
-    pre {
-      threshold = sensor:temperature_threshold
-    }
-    send_directive(event:attr("temperature") > sensor:temperature_threshold => "There was a temperature violation." | "No temperature violation.")
+    send_directive(event:attr("temperature") > sensor:temperature_threshold() => "There was a temperature violation." | "No temperature violation.")
     fired {
       raise wovyn event "threshold_violation"
         attributes {
           "temperature" : event:attr("temperature"),
           "timestamp" : event:attr("timestamp")
-        } if (event:attr("temperature") > threshold)
+        } if (event:attr("temperature") > sensor:temperature_threshold())
     }
   }
 
   rule threshold_notification {
     select when wovyn threshold_violation
-    TwilioApi:send_sms(sensor:receiving_phone, sensor:sending_phone, "Temperature on your wovyn device is above your threshold of " + sensor:temperature_threshold)
+    TwilioApi:send_sms(sensor:receiving_phone(), sensor:sending_phone(), "Temperature on your wovyn device is above your threshold of " + sensor:temperature_threshold())
   }
 }

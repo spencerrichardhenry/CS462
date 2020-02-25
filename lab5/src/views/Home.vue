@@ -1,11 +1,18 @@
 <template>
   <div class="home">
     <div class="col-lg">
+      <br />Current temperature:
+      <span
+        v-if="temps[temps.length - 1].temp > tempThreshold"
+        class="overThreshold"
+      >
+        <b>{{temps[temps.length - 1].temp}}</b>
+      </span>
+      <span v-else>
+        <b>Current temperature: {{temps[temps.length - 1].temp}}</b>
+      </span>
       <br />
-      <p>
-        Current temperature:
-        <b>{{temps[1].temp}}</b>
-      </p>
+
       <span class="overThreshold">Red text</span> indicates that a temperature reading is over the threshold.
       <br />
       <br />

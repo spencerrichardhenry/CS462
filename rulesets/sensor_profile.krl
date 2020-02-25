@@ -36,6 +36,7 @@ ruleset sensor_profile {
     pre {
       temperature_threshold = event:attr("threshold")
     }
+    send_directive("hellooo")
   }
 
 }

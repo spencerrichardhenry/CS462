@@ -8,35 +8,55 @@ ruleset sensor_profile {
     getProfile = function() {
       return {"location": sensor_location, "name": sensor_name, "threshold": temperature_threshold, "receiving_phone": receiving_phone, "sending_phone": sending_phone }
     }
-    sensor_location = "provo"
-    sensor_name = "wovyn"
-    temperature_threshold = 73
-    receiving_phone = 3606433965
-    sending_phone = 3177080143
+    sensor_location = function() {
+      return ent:sensor_location.defaultsTo("provo")
+    }
+    sensor_name = function() {
+      return ent:sensor_name.defaultsTo("wovyn")
+    }
+    temperature_threshold = function() {
+      return ent:temperature_threshold.defaultsTo(73)
+    }
+    receiving_phone = function() {
+      return ent:receiving_phone.defaultsTo(3606433965)
+    }
+    sending_phone = function() {
+      return ent:sending_phone.defaultsTo(3177080143)
+    }
   }
 
   rule updateProfile {
     select when sensor profile_updated
-    pre {
-    sensor_location = event:attr("location")
-    sensor_name = event:attr("name")
+    always {
+    ent:sensor_location := event:attr("location")
+    ent:sensor_name := event:attr("name")
     }
   }
 
   rule updatePhones {
     select when sensor phones_updated
-    pre {
-      receiving_phone = event:attr("receiving")
-      sending_phone = event:attr("sending")
+    always {
+      ent:receiving_phone := event:attr("receiving")
+      ent:sending_phone := event:attr("sending")
     } 
   }
 
   rule updateThreshold {
      select when sensor threshold_updated
-     pre {
-       temperature_threshold = event:attr("threshold")
+     always {
+       ent:temperature_threshold := event:attr("threshold")
      }
-     send_directive("hellooo")
+  }
+
+  rule clearProfile {
+    select when sensor profile_reset
+    always {
+      clear ent:sensor_location
+      clear ent:sensor_name
+      clear ent:temperature_threshold
+      clear ent:receiving_phone
+      clear ent:sending_phone
+    }
   }
 
 }

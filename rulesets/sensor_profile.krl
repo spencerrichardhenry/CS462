@@ -1,8 +1,8 @@
 ruleset sensor_profile {
   meta {
     shares __testing
-    provides sensor_location, sensor_name, temperature_threshold, receiving_phone, sending_phone 
-    shares sensor_location, sensor_name, temperature_threshold, receiving_phone, sending_phone 
+    provides sensor_location, sensor_name, temperature_threshold, receiving_phone, sending_phone, getProfile 
+    shares sensor_location, sensor_name, temperature_threshold, receiving_phone, sending_phone, getProfile 
   }
   global {
     getProfile = function() {
@@ -30,6 +30,9 @@ ruleset sensor_profile {
     always {
     ent:sensor_location := event:attr("location")
     ent:sensor_name := event:attr("name")
+    ent:receiving_phone := event:attr("receiving").as("Number")
+    ent:sending_phone := event:attr("sending").as("Number")
+    ent:temperature_threshold := event:attr("threshold").as("Number")
     }
   }
 
@@ -44,7 +47,7 @@ ruleset sensor_profile {
   rule updateThreshold {
      select when sensor threshold_updated
      always {
-       ent:temperature_threshold := event:attr("threshold").as("Number")
+      ent:temperature_threshold := event:attr("threshold").as("Number")
      }
   }
 

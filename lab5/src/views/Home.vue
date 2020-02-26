@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <div class="col-lg">
+      <a>
+        <router-link to="/profile">View/change profile</router-link>
+      </a>
       <br />Current temperature:
       <span
         v-if="temps[temps.length - 1].temp > tempThreshold"
@@ -54,13 +57,6 @@ export default {
     },
     tempThreshold() {
       return this.$store.state.tempThreshold;
-    }
-  },
-  methods: {
-    async searchMovies() {
-      this.movies = await this.$store.dispatch("getMovies", {
-        search: this.search
-      });
     }
   }
 };

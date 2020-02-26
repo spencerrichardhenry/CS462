@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     temps: null,
     violations: null,
-    tempThreshold: 73.0
+    tempThreshold: 73.0,
+    profile: null
   },
   mutations: {
     setTemps(state, temps) {
@@ -20,6 +21,10 @@ export default new Vuex.Store({
     },
     setTempThreshold(state, tempThreshold) {
       state.tempThreshold = tempThreshold;
+    },
+    setProfile(state, profile) {
+      state.profile = profile;
+      state.tempThreshold = profile.threshold;
     }
   },
   actions: {
@@ -39,6 +44,15 @@ export default new Vuex.Store({
         await this.dispatch("getViolations", context);
         return "";
       } catch (error) {
+        return "";
+      }
+    },
+    async getProfile(context) {
+      try {
+        let response = await axios.get("/sky/cloud/GM9rGepSqHudoUUo4DXifS/sensor_profile/getProfile");
+        context.commit("setProfile", response.data);
+      } catch (error) {
+        console.log(error);
         return "";
       }
     }

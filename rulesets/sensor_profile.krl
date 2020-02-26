@@ -6,7 +6,7 @@ ruleset sensor_profile {
   }
   global {
     getProfile = function() {
-      return {"location": sensor_location, "name": sensor_name, "threshold": temperature_threshold, "receiving_phone": receiving_phone, "sending_phone": sending_phone }
+      return {"location": sensor_location(), "name": sensor_name(), "threshold": temperature_threshold(), "receiving_phone": receiving_phone(), "sending_phone": sending_phone() }
     }
     sensor_location = function() {
       return ent:sensor_location.defaultsTo("provo")

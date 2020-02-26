@@ -1,5 +1,8 @@
 <template>
-  <p>yo</p>
+  <div v-if="location !== null">
+    <p>yo</p>
+    <input v-model="receiving_phone" type="text" />
+  </div>
 </template>
 
 <script>

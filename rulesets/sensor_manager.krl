@@ -58,7 +58,6 @@ ruleset sensor_manager {
       sensor = {
         "id": event:attr("id"), 
         "eci": event:attr("eci"), 
-        "sensor_name": event:attr("sensor_name")
       }
       sensor_name = event:attr("sensor_name")
     }

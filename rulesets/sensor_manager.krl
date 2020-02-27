@@ -19,6 +19,7 @@ ruleset sensor_manager {
       ent:sensors := ent:sensors.defaultsTo([]).union([sensor_name]);
       raise wrangler event "child_creation" attributes {
         "name": sensor_name,
+        "color": "#fff00"
         //TODO: Fill in the rest of the pertinent info for the pico
       }
     }

@@ -42,7 +42,7 @@ ruleset sensor_manager {
     }
     if exists then noop()
     notfired {
-      ent:sensors := ent:sensors.defaultsTo([]).union([sensor_name]);
+      //ent:sensors := ent:sensors.defaultsTo([]).union([sensor_name]);
       raise wrangler event "child_creation" attributes {
         "name": nameGenerator(sensor_name),
         "color": "#2e4dc7",
@@ -51,4 +51,23 @@ ruleset sensor_manager {
       }
     }
   }
+
+  rule store_new_sensor {
+    select when wrangler child_initialized
+    pre {
+      sensor = {
+        "id": event:attr("id"), 
+        "eci": event:attr("eci"), 
+        "sensor_name": event:attr("sensor_name")
+      }
+      sensor_name = event:attr("sensor_name")
+    }
+      if sensor_name then noop()
+      fired {
+        ent:sensors := ent:sensors.defaultsTo({})
+        ent:sensors{[sensor_name]} := sensor
+      }
+    
+  }
+
 }

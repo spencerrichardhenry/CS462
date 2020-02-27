@@ -11,6 +11,9 @@ ruleset sensor_manager {
     getSensors = function() {
       return ent:sensors
     }
+    nameGenerator = function(sensor_name) {
+      sensor_name + "sensor Pico"
+    }
   }
 
   rule sensors_empty {
@@ -20,6 +23,16 @@ ruleset sensor_manager {
     }
   }
 
+  rule sensor_already_exists {
+    select when sensor sensor_needed
+    pre {
+      sensor_name = event:attr("sensor_name")
+      exists = ent:sensors >< sensor_name
+    }
+    if exists then 
+      send_directive("sensor_ready", {"sensor_name": sensor_name})
+  }
+
   rule sensor_needed {
     select when sensor new_sensor
     pre {
@@ -27,12 +40,13 @@ ruleset sensor_manager {
       exists = ent:sensors >< sensor_name
       eci = meta:eci
     }
-    if exists then send_directive("sensor already exists", {"sensor_name":sensor_name})
+    if exists then noop()
     notfired {
       ent:sensors := ent:sensors.defaultsTo([]).union([sensor_name]);
       raise wrangler event "child_creation" attributes {
-        "name": sensor_name,
-        "color": "#2e4dc7"
+        "name": nameGenerator(sensor_name),
+        "color": "#2e4dc7",
+        "sensor_name": sensor_name
         //TODO: Fill in the rest of the pertinent info for the pico
       }
     }

@@ -12,7 +12,7 @@ ruleset sensor_manager {
       return ent:sensors
     }
     nameGenerator = function(sensor_name) {
-      sensor_name + "sensor Pico"
+      sensor_name + " sensor pico"
     }
   }
 
@@ -42,12 +42,11 @@ ruleset sensor_manager {
     }
     if exists then noop()
     notfired {
-      //ent:sensors := ent:sensors.defaultsTo([]).union([sensor_name]);
       raise wrangler event "child_creation" attributes {
         "name": nameGenerator(sensor_name),
         "color": "#2e4dc7",
-        "sensor_name": sensor_name
-        //TODO: Fill in the rest of the pertinent info for the pico
+        "sensor_name": sensor_name,
+        "rids": ["sensor_profile", "temperature_store", "wovyn_base"]
       }
     }
   }
@@ -65,6 +64,7 @@ ruleset sensor_manager {
       fired {
         ent:sensors := ent:sensors.defaultsTo({})
         ent:sensors{[sensor_name]} := sensor
+
       }
     
   }

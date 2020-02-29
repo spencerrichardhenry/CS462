@@ -89,7 +89,8 @@ ruleset sensor_manager {
     if exists then send_directive("Deleting sensor", {"sensor_name":sensor_name})
     fired {
       raise wrangler event "child_deletion" attributes {
-        "name": nameGenerator(sensor_name)
+        "name": nameGenerator(sensor_name),
+        "picoIDArray": ent:sensors{[sensor_name]}{"id"}
       }
       clear ent:sensors{[sensor_name]}
     }

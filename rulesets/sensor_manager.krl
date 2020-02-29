@@ -15,12 +15,16 @@ ruleset sensor_manager {
       sensor_name + " sensor pico"
     }
     getAllSensorTemps = function() {
-      0.range(ent:sensors{"length"}).reduce(function(a,i) {
-        vals = Wrangler:skyQuery(ent:sensors[i.klog()]{"eci"}, "temperature_store", "temperatures")
-        trash = Wrangler:skyQuery(ent:sensors[a.klog()]{"eci"}, "temperature_store", "temperatures")
-        json = json.defaultsTo({})
-        json.append(vals)
+      json = json.defaultsTo({})
+      ent:sensors.map(function(x) {
+        json.append(Wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
       })
+      // 0.range(ent:sensors{"length"}).reduce(function(a,i) {
+      //   vals = Wrangler:skyQuery(ent:sensors[i.klog()]{"eci"}, "temperature_store", "temperatures")
+      //   trash = Wrangler:skyQuery(ent:sensors[a.klog()]{"eci"}, "temperature_store", "temperatures")
+      //   json = json.defaultsTo({})
+      //   json.append(vals)
+      // })
       
     }
   }

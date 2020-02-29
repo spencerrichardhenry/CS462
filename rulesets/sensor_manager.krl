@@ -89,7 +89,7 @@ ruleset sensor_manager {
     if exists then noop()
     fired {
       raise wrangler event "child_deletion" attributes {
-        "name": sensor_name
+        "name": nameGenerator(sensor_name)
       }
       clear ent:sensors{[sensor_name]}
     }

@@ -17,7 +17,7 @@ ruleset sensor_manager {
     getAllSensorTemps = function() {
       json = json.defaultsTo({})
       ent:sensors.map(function(x) {
-        json.append(Wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
+        json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
       })
       // 0.range(ent:sensors{"length"}).reduce(function(a,i) {
       //   vals = Wrangler:skyQuery(ent:sensors[i.klog()]{"eci"}, "temperature_store", "temperatures")

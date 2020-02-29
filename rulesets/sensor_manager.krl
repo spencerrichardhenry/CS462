@@ -1,6 +1,6 @@
 ruleset sensor_manager {
   meta {
-    shares __testing, showChildren, sensors
+    shares __testing, showChildren, sensors, getAllSensorTemps
     use module io.picolabs.wrangler alias wrangler
   }
   global {

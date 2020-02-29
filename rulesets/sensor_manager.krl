@@ -59,23 +59,40 @@ ruleset sensor_manager {
         "eci": event:attr("eci"), 
         }
       sensor_name = event:attr("sensor_name")
+      exists = ent:sensors >< sensor_name
+    }
+    if exists then 
+    event:send({
+      "eci": event:attr("eci"),
+      "domain":"sensor",
+      "type": "profile_updated",
+      "attrs": {
+        "location": "provo",
+        "name": event:attr("sensor_name"),
+        "receiving": 3606433965,
+        "sending": 3177080143,
+        "threshold": 73
       }
-      if sensor_name then 
-      event:send({
-        "eci": event:attr("eci"),
-        "domain":"sensor",
-        "type": "profile_updated",
-        "attrs": {
-          "location": "provo",
-          "name": "wovyn",
-          "receiving": 3606433965,
-          "sending": 3177080143,
-          "threshold": 73
-        }
-      })
-      fired {
-        ent:sensors := ent:sensors.defaultsTo({})
-        ent:sensors{[sensor_name]} := sensor
-      }
+    })
+    fired {
+      ent:sensors := ent:sensors.defaultsTo({})
+      ent:sensors{[sensor_name]} := sensor
+    }
   }
+
+  rule delete_sensor {
+    select when sensor unneeded_sensor
+    pre {
+      sensor_name = event:attr("sensor_name")
+      exists = ent:sensors >< sensor_name
+    }
+    if exists then noop()
+    fired {
+      raise wrangler event "child_deletion" attributes {
+        "name": sensor_name
+      }
+      clear ent:sensors{[sensor_name]}
+    }
+  }
+
 }

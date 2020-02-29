@@ -8,7 +8,7 @@ ruleset sensor_manager {
     showChildren = function() {
       wrangler:children()
     }
-    getSensors = function() {
+    sensors = function() {
       return ent:sensors
     }
     nameGenerator = function(sensor_name) {
@@ -57,16 +57,25 @@ ruleset sensor_manager {
       sensor = {
         "id": event:attr("id"), 
         "eci": event:attr("eci"), 
-      }
+        }
       sensor_name = event:attr("sensor_name")
-    }
-      if sensor_name then noop()
+      }
+      if sensor_name then 
+      event:send({
+        "eci": event:attr("eci"),
+        "domain":"sensor",
+        "type": "profile_updated",
+        "attrs": {
+          "location": "provo",
+          "name": "wovyn",
+          "receiving": 3606433965,
+          "sending": 3177080143,
+          "threshold": 73
+        }
+      })
       fired {
         ent:sensors := ent:sensors.defaultsTo({})
         ent:sensors{[sensor_name]} := sensor
-
       }
-    
   }
-
 }

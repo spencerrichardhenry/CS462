@@ -59,9 +59,7 @@ ruleset sensor_manager {
         "eci": event:attr("eci"), 
         }
       sensor_name = event:attr("sensor_name")
-      exists = ent:sensors >< sensor_name
     }
-    if exists then 
     event:send({
       "eci": event:attr("eci"),
       "domain":"sensor",

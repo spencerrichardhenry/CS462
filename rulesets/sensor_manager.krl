@@ -18,7 +18,6 @@ ruleset sensor_manager {
       json = []
       ent:sensors.map(function(x) {
         json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
-        // json.length > 0 =>  | (json = wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
       })     
     }
   }
@@ -80,8 +79,15 @@ ruleset sensor_manager {
       }
     })
     fired {
-      ent:sensors := ent:sensors.defaultsTo({})
-      ent:sensors{[sensor_name]} := sensor
+      raise wrangler event "subscription" attributes {
+        "wellKnown_Tx": event:attr("eci"),
+        "name": sensorSubscription,
+        "channel_type": sub,
+        "Rx_role": manager,
+        "Tx_role": sensor
+      }
+      //ent:sensors := ent:sensors.defaultsTo({})
+      //ent:sensors{[sensor_name]} := sensor
     }
   }
 

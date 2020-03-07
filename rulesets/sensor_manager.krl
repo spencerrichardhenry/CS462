@@ -93,6 +93,20 @@ ruleset sensor_manager {
     }
   }
 
+  rule subscribe_sensor {
+    select when sensor subscribe
+    if event:attr("eci") then noop()
+    fired {
+      raise wrangler event "subscription" attributes {
+        "wellKnown_Tx": event:attr("eci"),
+        "name": "sensorSubscription",
+        "channel_type": "sub",
+        "Rx_role": "manager",
+        "Tx_role": "sensor"
+      }
+    }
+  }
+
   rule delete_sensor {
     select when sensor unneeded_sensor
     pre {

@@ -16,7 +16,7 @@ ruleset sensor_manager {
       sensor_name + " sensor pico"
     }
     getAllSensorTemps = function() {
-      Subscriptions:established("type", "sub")
+      Subscriptions:established("Rx_role", "manager")
       // json = []
       // ent:sensors.map(function(x) {
       //   json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))

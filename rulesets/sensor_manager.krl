@@ -2,6 +2,7 @@ ruleset sensor_manager {
   meta {
     shares __testing, showChildren, sensors, getAllSensorTemps
     use module io.picolabs.wrangler alias wrangler
+    use module io.picolabs.subscription alias Subscriptions
   }
   global {
     __testing = { "events":  [ { "domain": "section", "type": "needed", "attrs": [ "sensor_name" ] } ] }
@@ -15,10 +16,11 @@ ruleset sensor_manager {
       sensor_name + " sensor pico"
     }
     getAllSensorTemps = function() {
-      json = []
-      ent:sensors.map(function(x) {
-        json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
-      })     
+      Subscriptions:established()
+      // json = []
+      // ent:sensors.map(function(x) {
+      //   json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
+      // })     
     }
   }
 

@@ -83,10 +83,10 @@ ruleset sensor_manager {
     fired {
       raise wrangler event "subscription" attributes {
         "wellKnown_Tx": event:attr("eci"),
-        "name": sensorSubscription,
-        "channel_type": sub,
-        "Rx_role": manager,
-        "Tx_role": sensor
+        "name": "sensorSubscription",
+        "channel_type": "sub",
+        "Rx_role": "manager",
+        "Tx_role": "sensor"
       }
       //ent:sensors := ent:sensors.defaultsTo({})
       //ent:sensors{[sensor_name]} := sensor

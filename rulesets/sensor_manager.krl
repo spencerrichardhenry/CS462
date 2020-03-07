@@ -19,7 +19,7 @@ ruleset sensor_manager {
       sensors = Subscriptions:established("Rx_role", "manager")
        json = []
        sensors.map(function(x) {
-         json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
+         json.append(wrangler:skyQuery(x.klog(){"Tx"}, "temperature_store", "temperatures"))
        })     
     }
   }

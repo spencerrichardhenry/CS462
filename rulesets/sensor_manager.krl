@@ -10,17 +10,17 @@ ruleset sensor_manager {
       wrangler:children()
     }
     sensors = function() {
-      return ent:sensors
+      Subscriptions:established("Rx_role", "manager")
     }
     nameGenerator = function(sensor_name) {
       sensor_name + " sensor pico"
     }
     getAllSensorTemps = function() {
-      Subscriptions:established("Rx_role", "manager")
-      // json = []
-      // ent:sensors.map(function(x) {
-      //   json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
-      // })     
+      sensors = Subscriptions:established("Rx_role", "manager")
+       json = []
+       sensors.map(function(x) {
+         json.append(wrangler:skyQuery(x.klog(){"eci"}, "temperature_store", "temperatures"))
+       })     
     }
   }
 

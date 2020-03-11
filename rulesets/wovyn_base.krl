@@ -6,6 +6,7 @@ ruleset wovyn_base {
     with account_sid = keys:auth{"account_sid"}
          auth_token =  keys:auth{"auth_token"}
     use module sensor_profile alias sensor
+    use module io.picolabs.subscription alias Subscriptions
   }
   global {
     __testing = { "queries": [ { "name": "__testing" } ],

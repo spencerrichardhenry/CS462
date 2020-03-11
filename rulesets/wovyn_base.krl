@@ -40,11 +40,11 @@ ruleset wovyn_base {
   rule threshold_notification {
     select when wovyn threshold_violation
     pre {
-    sensor = Subscriptions:established("Tx_role", "manager")
+    sensor = Subscriptions:established("Tx_role", "manager").klog()
     }
     if sensor then 
     event:send({
-      "eci": sensor{"Tx"},
+      "eci": sensor{"Tx"}.klog(),
       "domain":"wovyn",
       "type": "threshold_violation",
       "attrs": {

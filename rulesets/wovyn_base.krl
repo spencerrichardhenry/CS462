@@ -44,7 +44,7 @@ ruleset wovyn_base {
     }
     if sensor then 
     event:send({
-      "eci": sensor.klog(){"Tx"}.klog(),
+      "eci": sensor[0].klog(){"Tx"}.klog(),
       "domain":"wovyn",
       "type": "threshold_violation",
       "attrs": {

@@ -50,7 +50,8 @@ ruleset wovyn_base {
       "type": "threshold_violation",
       "attrs": {
         "temperature" : event:attr("temperature"),
-        "timestamp" : event:attr("timestamp")
+        "timestamp" : event:attr("timestamp"),
+        "threshold" : sensor:temperature_threshold()
       }
     })
   }  

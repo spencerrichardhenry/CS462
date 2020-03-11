@@ -52,9 +52,8 @@ ruleset sensorManager_profile {
   rule sms_notification {
     select when wovyn threshold_violation
     pre {
-      test = "You are in the sms_notification rule!".klog()
     }
-    TwilioApi:send_sms(receiving_phone(), sending_phone(), "Temperature on your wovyn device is above your threshold of " + temperature_threshold())
+    TwilioApi:send_sms(receiving_phone(), sending_phone(), "Temperature on your wovyn device is above your threshold of " + event:attr("threshold"))
   }
 
 }

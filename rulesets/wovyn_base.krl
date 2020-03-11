@@ -38,6 +38,19 @@ ruleset wovyn_base {
 
   rule threshold_notification {
     select when wovyn threshold_violation
-    TwilioApi:send_sms(sensor:receiving_phone(), sensor:sending_phone(), "Temperature on your wovyn device is above your threshold of " + sensor:temperature_threshold())
+    pre {
+    sensor = Subscriptions:established("Tx_role", "manager")
+    }
+    if sensor then 
+    event:send({
+      "eci": sensor{"Tx"},
+      "domain":"wovyn",
+      "type": "threshold_violation",
+      "attrs": {
+        "temperature" : event:attr("temperature"),
+        "timestamp" : event:attr("timestamp")
+      }
+    })
+  }  
+    // TwilioApi:send_sms(sensor:receiving_phone(), sensor:sending_phone(), "Temperature on your wovyn device is above your threshold of " + sensor:temperature_threshold())
   }
-}

@@ -16,7 +16,7 @@ ruleset sensor_manager {
       sensor_name + " sensor pico"
     }
     getAllSensorTemps = function() {
-      sensors = Subscriptions:established("Rx_role", "manager").klog()
+      sensors = Subscriptions:established("Rx_role", "manager")
        json = []
        sensors.map(function(x) {
          json.append(wrangler:skyQuery(x.klog(){"Tx"}, "temperature_store", "temperatures"))

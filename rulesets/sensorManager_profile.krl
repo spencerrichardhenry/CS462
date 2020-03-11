@@ -1,4 +1,4 @@
-ruleset sensor_profile {
+ruleset sensorManager_profile {
   meta {
     shares __testing
     use module twilio_auth

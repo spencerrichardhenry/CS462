@@ -1,10 +1,6 @@
 ruleset wovyn_base {
   meta {
     shares __testing
-    use module twilio_auth
-    use module twilioApiModule alias TwilioApi
-    with account_sid = keys:auth{"account_sid"}
-         auth_token =  keys:auth{"auth_token"}
     use module sensor_profile alias sensor
     use module sensorManager_profile alias managerProfile
     use module io.picolabs.subscription alias Subscriptions

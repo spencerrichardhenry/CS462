@@ -2,6 +2,7 @@ ruleset temperature_store {
   meta {
     shares __testing
     use module sensor_profile alias sensor
+    use module io.picolabs.subscription alias Subscriptions
     provides temperatures, threshold_violations, inrange_temperatures
     shares temperatures, threshold_violations, inrange_temperatures
   }

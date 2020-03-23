@@ -46,7 +46,7 @@ ruleset temperature_store {
       manager = Subscriptions:established("Tx_role", "manager")
     }
     event:send({
-      "eci": manager{"Tx"}.klog("In generate_report"),
+      "eci": manager.klog("In generate_report"){"Tx"}.klog("In generate_report: Tx"),
       "domain":"sensor",
       "type": "gatherTempReport",
       "attrs": {

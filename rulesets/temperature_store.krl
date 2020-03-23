@@ -32,7 +32,7 @@ ruleset temperature_store {
   rule collect_threshold_violations {
     select when wovyn threshold_violation
     always {
-      ent:threshold_violations := ent:threshold_violations.append({
+      ent:threshold_violations := ent:threshold_violations.defaultsTo([]).append({
         "temp" : event:attr("temperature"),
         "timestamp" : event:attr("timestamp")
       })
@@ -51,6 +51,7 @@ ruleset temperature_store {
       "attrs": {
         "correlationID": event:attr("correlationID"),
         "Manager_Rx": event:attr("Manager_Rx"),
+        "temps": temperatures()
       }
     })
   }

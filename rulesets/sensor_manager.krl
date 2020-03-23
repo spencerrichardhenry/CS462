@@ -12,6 +12,9 @@ ruleset sensor_manager {
     sensors = function() {
       Subscriptions:established("Rx_role", "manager")
     }
+    numSensors = function() {
+      Subscriptions:established("Rx_role", "manager").length()
+    }
     nameGenerator = function(sensor_name) {
       sensor_name + " sensor pico"
     }
@@ -27,21 +30,32 @@ ruleset sensor_manager {
   rule getAllTemps {
     select when sensor getAllTemps
     foreach sensors() setting (sub)
+    pre {
+      correlationID = event:attr("correlationID")
+    }
       event:send({
         "eci": sub{"Tx"},
         "domain":"wovyn",
         "type": "temperature_report",
         "attrs": {
-          "correlationID": event:attr("correlationID"),
+          "correlationID": correlationID,
           "Manager_Rx": sub{"Rx"},
         }
       })
+      fired {
+        new_map = {}.put(sub{correlationID}, {
+          "temperature_sensors": numSensors(), 
+          "responding": numSensors(),
+          "temperatures": []
+        })
+        if ent:reports.klog(){sub{correlationID}} || ent:reports.put(new_map)
+      }
     }
 
   rule gatherTemps {
     select when sensor gatherTempReport
-    pre {
-      
+    fired {
+      ent:reports := ent:reports{event:attr("correlationID")}{"temperatures"}.defaultsTo([]).append(event:attr("temps"))
     }
   }
 

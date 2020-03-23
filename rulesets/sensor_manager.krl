@@ -34,7 +34,7 @@ ruleset sensor_manager {
       correlationID = event:attr("correlationID")
     }
       event:send({
-        "eci": sub.klog(){"Tx"}.klog(),
+        "eci": sub{"Tx"},
         "domain":"wovyn",
         "type": "temperature_report",
         "attrs": {
@@ -54,6 +54,9 @@ ruleset sensor_manager {
 
   rule gatherTemps {
     select when sensor gatherTempReport
+    pre {
+      test = event:attr("eci").klog("In gatherTemps")
+    }
     fired {
       ent:reports := ent:reports{event:attr("correlationID")}{"temperatures"}.defaultsTo([]).append(event:attr("temps"))
     }

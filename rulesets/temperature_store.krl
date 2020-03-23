@@ -43,7 +43,7 @@ ruleset temperature_store {
   rule generate_report {
     select when wovyn temperature_report
     pre {
-      manager = Subscriptions:established("Tx_role", "manager")
+      manager = Subscriptions:established("Tx_role", "manager")[0]
     }
     event:send({
       "eci": manager.klog("In generate_report"){"Tx"}.klog("In generate_report: Tx"),

@@ -47,16 +47,13 @@ ruleset sensor_manager {
           "temperature_sensors": numSensors(), 
           "responding": numSensors(),
           "temperatures": []
-        })
-        if ent:reports{sub{correlationID}} || ent:reports.put(new_map)
+        }).klog()
+        if ent:reports{sub{correlationID}} || ent:reports.put(new_map).klog("Just put newMap into ent:reports")
       }
     }
 
   rule gatherTemps {
     select when sensor gatherTempReport
-    pre {
-      test = event:attr("eci").klog("In gatherTemps")
-    }
     fired {
       ent:reports := ent:reports{event:attr("correlationID")}{"temperatures"}.defaultsTo([]).append(event:attr("temps"))
     }

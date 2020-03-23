@@ -19,8 +19,29 @@ ruleset sensor_manager {
       sensors = Subscriptions:established("Rx_role", "manager")
        json = []
        sensors.map(function(x) {
-         json.append(wrangler:skyQuery(x{"Tx"}.klog(), "temperature_store", "temperatures"))
+         json.append(wrangler:skyQuery(x{"Tx"}, "temperature_store", "temperatures"))
        })     
+    }
+  }
+
+  rule getAllTemps {
+    select when sensor getAllTemps
+    foreach sensors() setting (sub)
+      event:send({
+        "eci": sub{"Tx"},
+        "domain":"wovyn",
+        "type": "temperature_report",
+        "attrs": {
+          "correlationID": event:attr("correlationID"),
+          "Manager_Rx": sub{"Rx"},
+        }
+      })
+    }
+
+  rule gatherTemps {
+    select when sensor gatherTempReport
+    pre {
+      
     }
   }
 

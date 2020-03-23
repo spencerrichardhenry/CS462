@@ -39,6 +39,22 @@ ruleset temperature_store {
     }
   }
 
+  rule generate_report {
+    select when wovyn temperature_report
+    pre {
+      manager = Subscriptions:established("Tx_role", "manager")
+    }
+    event:send({
+      "eci": manager{"Tx"},
+      "domain":"sensor",
+      "type": "gatherTempReport",
+      "attrs": {
+        "correlationID": event:attr("correlationID"),
+        "Manager_Rx": event:attr("Manager_Rx"),
+      }
+    })
+  }
+
   rule clear_temperatures {
     select when sensor reading_reset
     always {

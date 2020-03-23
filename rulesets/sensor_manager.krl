@@ -34,7 +34,7 @@ ruleset sensor_manager {
       correlationID = event:attr("correlationID")
     }
       event:send({
-        "eci": sub{"Tx"}.klog(),
+        "eci": sub.klog(){"Tx"},
         "domain":"wovyn",
         "type": "temperature_report",
         "attrs": {

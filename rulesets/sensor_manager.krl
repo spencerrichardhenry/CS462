@@ -48,7 +48,8 @@ ruleset sensor_manager {
           "responding": numSensors(),
           "temperatures": []
         })
-        if ent:reports{sub{correlationID}} || ent:reports.put(new_map.klog("this is new_map"))
+        if ent:reports{sub{correlationID}} || 
+          ent:reports.defaultsTo({}).put(new_map.klog("this is new_map"))
       }
     }
 

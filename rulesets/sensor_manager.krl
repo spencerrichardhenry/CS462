@@ -45,10 +45,9 @@ ruleset sensor_manager {
       fired {
         sensor_map = {"temperature_sensors": numSensors(), "responding": numSensors(), "temperatures": []}
         new_map = {}.put(sub{correlationID}, sensor_map.klog())
-        if ent:reports{sub{correlationID}} || 
-          ent:reports.defaultsTo({}).put(new_map.klog("this is new_map"))
-      }
+        ent:reports := ent:reports.defaultsTo({}).put(new_map.klog("this is new_map")) on final
     }
+  }
 
   rule gatherTemps {
     select when sensor gatherTempReport

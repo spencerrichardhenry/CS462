@@ -22,7 +22,7 @@ ruleset temperature_store {
   rule collect_temperatures {
     select when wovyn new_temperature_reading
     always {
-      ent:temperatures := ent:temperatures.append({
+      ent:temperatures := ent:temperatures.defaultsTo([]).append({
         "temp" : event:attr("temperature"),
         "timestamp" : time:now({"tz" : "America/Denver"})
       })

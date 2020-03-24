@@ -3,6 +3,7 @@ ruleset sensor_manager {
     shares __testing, showChildren, sensors, getAllSensorTemps
     use module io.picolabs.wrangler alias wrangler
     use module io.picolabs.subscription alias Subscriptions
+    shares getLastFiveReports
   }
   global {
     __testing = { "events":  [ { "domain": "section", "type": "needed", "attrs": [ "sensor_name" ] } ] }
@@ -25,13 +26,32 @@ ruleset sensor_manager {
          json.append(wrangler:skyQuery(x{"Tx"}, "temperature_store", "temperatures"))
        })     
     }
+    getLastFiveReports = function() {
+      json = []
+      index = ent:correlationID - 1
+      item = ent:reports{index.as("String")}.put("reportID", index)
+      json = json.append(item)
+      index = index - 1
+      item = ent:reports{index.as("String")}.put("reportID", index)
+      json = json.append(item)
+      index = index - 1
+      item = ent:reports{index.as("String")}.put("reportID", index)
+      json = json.append(item)
+      index = index - 1
+      item = ent:reports{index.as("String")}.put("reportID", index)
+      json = json.append(item)
+      index = index - 1
+      item = ent:reports{index.as("String")}.put("reportID", index)
+      json = json.append(item)
+      return json
+    }
   }
 
   rule getAllTemps {
     select when sensor getAllTemps
     foreach sensors() setting (sub)
     pre {
-      correlationID = event:attr("correlationID")
+      correlationID = ent:correlationID.defaultsTo(0)
     }
       event:send({
         "eci": sub{"Tx"},
@@ -44,16 +64,30 @@ ruleset sensor_manager {
       })
       fired {
         sensor_map = {"temperature_sensors": numSensors(), "responding": numSensors(), "temperatures": []}
-        new_map = {}.put(sub{correlationID}, sensor_map.klog())
-        ent:reports := ent:reports.defaultsTo({}).put(new_map.klog("this is new_map")) on final
+        ent:reports := ent:reports.defaultsTo({}).put(correlationID, sensor_map) on final
+        ent:correlationID := ent:correlationID + 1 on final
+    }
+  }
+
+  rule setReportId {
+    select when sensor setReportId
+    noop()
+    fired {
+      ent:correlationID := 1
     }
   }
 
   rule gatherTemps {
     select when sensor gatherTempReport
-    fired {
-      ent:reports := ent:reports{event:attr("correlationID")}{"temperatures"}.defaultsTo([]).append(event:attr("temps"))
+    pre {
+      correlationID = event:attr("correlationID")
+      tempsAppended = ent:reports[correlationID]["temperatures"].klog("pre-append").append(event:attr("temps")).klog("test")
+      tempsReportNew = {"temperature_sensors": numSensors(), "responding": numSensors(), "temperatures": tempsAppended}
     }
+    noop()
+     fired {
+       ent:reports := ent:reports.put(correlationID, tempsReportNew)
+     }
   }
 
   rule sensors_empty {
